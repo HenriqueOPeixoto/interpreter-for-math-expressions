@@ -37,10 +37,9 @@ impl LexScanner {
     }
 
     pub fn is_digit(&self, c: char) -> bool {
-        if matches!(c, '0'..='9') {
-            return true;
+        match c {
+            '0'..='9'=> true,
+            _ => false
         }
-
-        false
     }
 }
