@@ -4,6 +4,10 @@ use std::fs;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
+    if args.len() < 2 {
+        panic!("Um nome de arquivo deve ser fornecido!")
+    }
+
     let filename = &args[1];
 
     println!("{}", filename);
@@ -15,3 +19,4 @@ fn main() {
     
 
 }
+
