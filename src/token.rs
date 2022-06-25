@@ -1,5 +1,4 @@
-const DIGITO: i32 = 0;
-const ESPACO: i32 = 1;
+pub const DIGITO: i32 = 1;
 
 pub struct Token {
     tipo: i32,
