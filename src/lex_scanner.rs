@@ -42,4 +42,11 @@ impl LexScanner {
             _ => false
         }
     }
+
+    pub fn is_operator(&self, c: char) -> bool {
+        match c {
+            '+'|'-'|'*'|'/'|'^' => true,
+            _ => false
+        }
+    }
 }
