@@ -1,5 +1,6 @@
 pub const DIGIT: i32 = 1;
 pub const OPERATOR: i32 = 3;
+pub const SPACE: i32 = 4;
 
 pub struct LexScanner {
     pub content: Vec<char>,
@@ -27,7 +28,10 @@ impl LexScanner {
                         true => self.state = DIGIT,
                         false => match self.is_operator(c) {
                             true => self.state = OPERATOR,
-                            false => ()
+                            false => match self.is_space(c) {
+                                true => self.state = SPACE,
+                                false => ()
+                            }
                         }
                     };
                 }
@@ -50,6 +54,13 @@ impl LexScanner {
     pub fn is_operator(&self, c: char) -> bool {
         match c {
             '+'|'-'|'*'|'/'|'^' => true,
+            _ => false
+        }
+    }
+
+    pub fn is_space(&self, c: char) -> bool {
+        match c {
+            ' '|'\n' => true,
             _ => false
         }
     }
