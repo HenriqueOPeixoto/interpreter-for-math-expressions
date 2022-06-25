@@ -1,5 +1,5 @@
 [package]
-name = "MeuCompilador"
+name = "meu_compilador"
 version = "0.1.0"
 edition = "2021"
 
