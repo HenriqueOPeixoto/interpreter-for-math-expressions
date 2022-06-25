@@ -1,3 +1,5 @@
+pub const DIGITO: i32 = 1;
+
 pub struct LexScanner {
     pub content: Vec<char>,
     pub state: i32,
@@ -18,7 +20,15 @@ impl LexScanner {
         loop {
             c = self.content[self.pos];
 
-            println!("{}", c);
+            match self.state {
+                0 => {
+                    match self.is_digit(c) {
+                        true => self.state = DIGITO,
+                        false => () // if false do nothing
+                    };
+                }
+                _ => ()
+            };
 
             self.pos += 1;
 
