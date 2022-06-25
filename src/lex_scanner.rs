@@ -1,4 +1,4 @@
-pub const DIGITO: i32 = 1;
+pub const DIGIT: i32 = 1;
 pub const OPERATOR: i32 = 3;
 
 pub struct LexScanner {
@@ -24,7 +24,7 @@ impl LexScanner {
             match self.state {
                 0 => {
                     match self.is_digit(c) {
-                        true => self.state = DIGITO,
+                        true => self.state = DIGIT,
                         false => match self.is_operator(c) {
                             true => self.state = OPERATOR,
                             false => ()
