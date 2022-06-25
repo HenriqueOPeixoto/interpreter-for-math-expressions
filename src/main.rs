@@ -1,4 +1,5 @@
 pub mod token;
+pub mod lex_scanner;
 
 use std::env;
 use std::fs;
