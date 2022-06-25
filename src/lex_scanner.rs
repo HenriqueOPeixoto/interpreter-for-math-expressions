@@ -1,15 +1,15 @@
-struct LexScanner {
-    content: Vec<char>,
-    state: i32,
-    pos: usize
+pub struct LexScanner {
+    pub content: Vec<char>,
+    pub state: i32,
+    pub pos: usize
 }
 
 impl LexScanner {
-    fn prepare_scanner(&mut self, file: String) {
+    /* pub fn prepare_scanner(&mut self, file: String) {
         self.content = file.chars().collect();
-    }
+    } */
 
-    fn next_token(&mut self) {
+    pub fn next_token(&mut self) {
         self.state = 0;
         self.pos = 0;
 
@@ -21,10 +21,12 @@ impl LexScanner {
             println!("{}", c);
 
             self.pos += 1;
+
+            if self.pos == self.content.len() { break; }
         }
     }
 
-    fn isDigit(&self, c: char) -> bool {
+    pub fn is_digit(&self, c: char) -> bool {
         if matches!(c, '0'..='9') {
             return true;
         }
