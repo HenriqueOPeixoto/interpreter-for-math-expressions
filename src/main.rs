@@ -1,3 +1,5 @@
+pub mod token;
+
 use std::env;
 use std::fs;
 
