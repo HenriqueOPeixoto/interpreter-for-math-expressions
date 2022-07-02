@@ -1,4 +1,7 @@
+use crate::token::Token;
+
 pub const DIGIT: i32 = 1;
+pub const NOT_DIGIT: i32 = 2;
 pub const OPERATOR: i32 = 3;
 pub const SPACE: i32 = 4;
 pub const EXP: i32 = 7;
@@ -14,11 +17,12 @@ impl LexScanner {
         self.content = file.chars().collect();
     } */
 
-    pub fn next_token(&mut self) {
+    pub fn next_token(&mut self) -> Token {
         self.state = 0;
         self.pos = 0;
 
         let mut c: char;
+        let mut buffer:String = String::from("");
 
         loop {
             c = self.content[self.pos];
@@ -26,26 +30,42 @@ impl LexScanner {
             match self.state {
                 0 => {
                     match self.is_digit(c) {
-                        true => self.state = DIGIT,
+                        true => {
+                            buffer.push(c);
+                            self.state = DIGIT
+                        },
                         false => match self.is_operator(c) {
                             true => self.state = OPERATOR,
                             false => match self.is_space(c) {
                                 true => self.state = SPACE,
                                 false => match self.is_e(c) {
                                     true => self.state = EXP,
-                                    false => ()
+                                    false => panic!("O token não reconhecido!")
                                 }
                             }
                         }
                     }
-                    
+
+                }
+                DIGIT => {
+                    match self.is_digit(c) {
+                        true => {
+                            buffer.push(c);
+                            self.state = DIGIT
+                        },
+                        false => self.state = NOT_DIGIT
+                    }
+                }
+                NOT_DIGIT => {
+                    let novo_token = Token { tipo: DIGIT, termo: buffer.to_string() };
+                    return novo_token;
                 }
                 _ => ()
             };
 
             self.pos += 1;
 
-            if self.pos == self.content.len() { break; }
+            if self.pos == self.content.len() { todo!(); }
         }
     }
 
