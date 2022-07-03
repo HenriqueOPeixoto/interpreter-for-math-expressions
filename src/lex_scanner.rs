@@ -53,7 +53,10 @@ impl LexScanner {
                             buffer.push(c);
                             self.state = DIGIT
                         },
-                        false => self.state = NOT_DIGIT
+                        false => {
+                            self.state = NOT_DIGIT;
+                            self.pos -= 1;
+                        }
                     }
                 }
                 NOT_DIGIT => {
