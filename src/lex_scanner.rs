@@ -37,7 +37,10 @@ impl LexScanner {
                             self.state = DIGIT
                         },
                         false => match self.is_operator(c) {
-                            true => self.state = OPERATOR,
+                            true => {
+                                buffer.push(c);
+                                self.state = OPERATOR
+                            },
                             false => match self.is_space(c) {
                                 true => self.state = SPACE,
                                 false => match self.is_e(c) {
@@ -62,8 +65,10 @@ impl LexScanner {
                     }
                 }
                 NOT_DIGIT => {
-                    let novo_token = Token { tipo: DIGIT, termo: buffer.to_string() };
-                    return novo_token;
+                    return Token { tipo: DIGIT, termo: buffer.to_string() };
+                }
+                OPERATOR => {
+                    return Token { tipo: OPERATOR, termo: buffer.to_string() };
                 }
                 _ => ()
             };
