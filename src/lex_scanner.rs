@@ -5,7 +5,8 @@ pub const NOT_DIGIT: i32 = 2;
 pub const OPERATOR: i32 = 3;
 pub const SPACE: i32 = 4;
 pub const NOT_SPACE: i32 = 5;
-pub const EXP: i32 = 7;
+pub const EXP1: i32 = 7;
+pub const EXP2: i32 = 8;
 
 pub const OPEN_PAR: i32 = 13;
 pub const CLOSE_PAR: i32 = 15;
@@ -57,7 +58,10 @@ impl LexScanner {
                                     self.state = SPACE;
                                 },
                                 false => match self.is_e(c) {
-                                    true => self.state = EXP,
+                                    true => {
+                                        buffer.push(c);
+                                        self.state = EXP1;
+                                    },
                                     false => match self.is_open_par(c) {
                                         true => {
                                             buffer.push(c);
@@ -107,6 +111,26 @@ impl LexScanner {
                 NOT_SPACE => {
                     self.pos -= 1;
                     return Token { tipo: SPACE, termo: buffer.to_string() }
+                }
+                EXP1 => {
+                    match c {
+                        'x' => {
+                            buffer.push(c);
+                            self.state = EXP2;
+                            
+                        },
+                        _ => panic!("Token não reconhecido!")
+                    }
+                }
+                EXP2 => {
+                    match c {
+                        'p' => {
+                            buffer.push(c);
+                            return Token { tipo: EXP1, termo: buffer.to_string() }
+                            
+                        },
+                        _ => panic!("Token não reconhecido!")
+                    }
                 }
                 OPEN_PAR => {
                     return Token { tipo: OPEN_PAR, termo: buffer.to_string() }
