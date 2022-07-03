@@ -6,7 +6,7 @@ pub struct Token {
 }
 
 impl Token {
-    fn to_string(&self) {
+    pub fn to_string(&self) {
         println!("Tipo: {}, Termo: {}", self.tipo, self.termo);
     }
 }
