@@ -11,6 +11,9 @@ pub const EXP2: i32 = 8;
 pub const OPEN_PAR: i32 = 13;
 pub const CLOSE_PAR: i32 = 15;
 
+pub const  OPEN_SQ_BRACKET: i32 = 17;
+pub const CLOSE_SQ_BRACKET: i32 = 19;
+
 pub const EOF: i32 = -1;
 
 pub struct LexScanner {
@@ -25,19 +28,24 @@ impl LexScanner {
     } */
 
     pub fn next_token(&mut self) -> Token {
-
+        
+        
         if self.pos == self.content.len() {
             return Token { tipo: EOF, termo: "".to_string() }
         }
-
+        
+        if self.is_end(self.content[self.pos]) {
+            return Token { tipo: EOF, termo: "".to_string() }
+        }
+        
         self.state = 0;
-
+        
         let mut c: char;
         let mut buffer:String = String::from("");
-
+        
         loop {
             c = self.content[self.pos];
-
+            
             
 
             match self.state {
@@ -72,7 +80,19 @@ impl LexScanner {
                                                 buffer.push(c);
                                                 self.state = CLOSE_PAR;
                                             },
-                                            false => panic!("Token não reconhecido!")
+                                            false => match self.is_open_sq_bracket(c) {
+                                                true => {
+                                                    buffer.push(c);
+                                                    self.state = OPEN_SQ_BRACKET;
+                                                },
+                                                false => match self.is_close_sq_bracket(c) {
+                                                    true => {
+                                                        buffer.push(c);
+                                                        self.state = CLOSE_SQ_BRACKET;
+                                                    },
+                                                    false => panic!("Token não reconhecido")
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -126,6 +146,7 @@ impl LexScanner {
                     match c {
                         'p' => {
                             buffer.push(c);
+                            self.pos += 1;
                             return Token { tipo: EXP1, termo: buffer.to_string() }
                             
                         },
@@ -137,6 +158,12 @@ impl LexScanner {
                 }
                 CLOSE_PAR => {
                     return Token { tipo: CLOSE_PAR, termo: buffer.to_string() }
+                }
+                OPEN_SQ_BRACKET => {
+                    return Token { tipo: OPEN_SQ_BRACKET, termo: buffer.to_string() }
+                }
+                CLOSE_SQ_BRACKET => {
+                    return Token { tipo: CLOSE_SQ_BRACKET, termo: buffer.to_string() }
                 }
                 _ => ()
             };
@@ -199,6 +226,19 @@ impl LexScanner {
     fn is_close_par(&self, c: char) -> bool {
         match c {
             ')' => true,
+            _ => false
+        }
+    }
+
+    fn is_open_sq_bracket(&self, c: char) -> bool {
+        match c {
+            '[' => true,
+            _ => false
+        }
+    }
+    fn is_close_sq_bracket(&self, c: char) -> bool {
+        match c {
+            ']' => true,
             _ => false
         }
     }
