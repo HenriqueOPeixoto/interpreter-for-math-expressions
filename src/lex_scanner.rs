@@ -6,6 +6,8 @@ pub const OPERATOR: i32 = 3;
 pub const SPACE: i32 = 4;
 pub const EXP: i32 = 7;
 
+pub const EOF: i32 = -1;
+
 pub struct LexScanner {
     pub content: Vec<char>,
     pub state: i32,
@@ -18,8 +20,8 @@ impl LexScanner {
     } */
 
     pub fn next_token(&mut self) -> Token {
+
         self.state = 0;
-        self.pos = 0;
 
         let mut c: char;
         let mut buffer:String = String::from("");
@@ -68,7 +70,9 @@ impl LexScanner {
 
             self.pos += 1;
 
-            if self.pos == self.content.len() { todo!(); }
+            if self.pos == self.content.len() { 
+                return Token { tipo: EOF, termo: "".to_string() };
+            }
         }
     }
 
