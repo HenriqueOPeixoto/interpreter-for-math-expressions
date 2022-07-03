@@ -1,4 +1,4 @@
-use crate::token::{Token, self};
+use crate::token::Token;
 
 pub const DIGIT: i32 = 1;
 pub const NOT_DIGIT: i32 = 2;

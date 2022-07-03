@@ -1,5 +1,3 @@
-pub const DIGITO: i32 = 1;
-
 pub struct Token {
     pub tipo: i32,
     pub termo: String
