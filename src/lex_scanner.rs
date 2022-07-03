@@ -1,4 +1,4 @@
-use crate::token::Token;
+use crate::token::{Token, self};
 
 pub const DIGIT: i32 = 1;
 pub const NOT_DIGIT: i32 = 2;
@@ -6,6 +6,9 @@ pub const OPERATOR: i32 = 3;
 pub const SPACE: i32 = 4;
 pub const NOT_SPACE: i32 = 5;
 pub const EXP: i32 = 7;
+
+pub const OPEN_PAR: i32 = 13;
+pub const CLOSE_PAR: i32 = 15;
 
 pub const EOF: i32 = -1;
 
@@ -49,10 +52,25 @@ impl LexScanner {
                                 self.state = OPERATOR;
                             },
                             false => match self.is_space(c) {
-                                true => self.state = SPACE,
+                                true => {
+                                    buffer.push(c);
+                                    self.state = SPACE;
+                                },
                                 false => match self.is_e(c) {
                                     true => self.state = EXP,
-                                    false => panic!("O token não reconhecido!")
+                                    false => match self.is_open_par(c) {
+                                        true => {
+                                            buffer.push(c);
+                                            self.state = OPEN_PAR;
+                                        },
+                                        false => match self.is_close_par(c) {
+                                            true => {
+                                                buffer.push(c);
+                                                self.state = CLOSE_PAR;
+                                            },
+                                            false => panic!("Token não reconhecido!")
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -89,6 +107,12 @@ impl LexScanner {
                 NOT_SPACE => {
                     self.pos -= 1;
                     return Token { tipo: SPACE, termo: buffer.to_string() }
+                }
+                OPEN_PAR => {
+                    return Token { tipo: OPEN_PAR, termo: buffer.to_string() }
+                }
+                CLOSE_PAR => {
+                    return Token { tipo: CLOSE_PAR, termo: buffer.to_string() }
                 }
                 _ => ()
             };
@@ -138,6 +162,19 @@ impl LexScanner {
     pub fn is_end(&self, c: char) -> bool {
         match c {
             '\0' => true,
+            _ => false
+        }
+    }
+
+    fn is_open_par(&self, c: char) -> bool {
+        match c {
+            '(' => true,
+            _ => false
+        }
+    }
+    fn is_close_par(&self, c: char) -> bool {
+        match c {
+            ')' => true,
             _ => false
         }
     }
