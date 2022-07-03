@@ -30,6 +30,10 @@ impl LexScanner {
         loop {
             c = self.content[self.pos];
 
+            if self.is_end(c) {
+                return Token { tipo: EOF, termo: "".to_string() }
+            }
+
             match self.state {
                 0 => {
                     match self.is_digit(c) {
@@ -40,7 +44,7 @@ impl LexScanner {
                         false => match self.is_operator(c) {
                             true => {
                                 buffer.push(c);
-                                self.state = OPERATOR
+                                self.state = OPERATOR;
                             },
                             false => match self.is_space(c) {
                                 true => self.state = SPACE,
@@ -88,10 +92,10 @@ impl LexScanner {
             };
 
             self.pos += 1;
-
-            if self.pos == self.content.len() { 
-                return Token { tipo: EOF, termo: "".to_string() };
-            }
+            
+            /* if self.pos == self.content.len() { 
+                return Token { tipo: self.state, termo: buffer.to_string() };
+            } */
         }
     }
 
@@ -122,4 +126,12 @@ impl LexScanner {
             _ => false
         }
     }
+
+    pub fn is_end(&self, c: char) -> bool {
+        match c {
+            '\0' => true,
+            _ => false
+        }
+    }
+
 }
