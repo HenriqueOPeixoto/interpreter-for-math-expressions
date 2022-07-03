@@ -68,7 +68,6 @@ impl LexScanner {
                     return Token { tipo: DIGIT, termo: buffer.to_string() };
                 }
                 OPERATOR => {
-                    self.pos -= 1;
                     return Token { tipo: OPERATOR, termo: buffer.to_string() };
                 }
                 _ => ()
