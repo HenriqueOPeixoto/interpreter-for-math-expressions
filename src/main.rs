@@ -20,7 +20,11 @@ fn main() {
     let file = fs::read_to_string(filename)
         .expect("Não foi possível ler o arquivo!");
 
-    let content = file.chars().collect();
+    let mut content: Vec<char> = file.chars().collect();
+
+    content.push('\0');
+
+    println!("{:?}", content);
 
     let mut lex = LexScanner {
         content: content,
@@ -32,6 +36,8 @@ fn main() {
     loop {
         token = lex.next_token();
         
+        token.to_string();
+
         if token.tipo == EOF { break; }
     }
     
