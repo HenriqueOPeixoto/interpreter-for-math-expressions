@@ -182,35 +182,35 @@ impl LexScanner {
         }
     }
 
-    pub fn is_digit(&self, c: char) -> bool {
+    fn is_digit(&self, c: char) -> bool {
         match c {
             '0'..='9'=> true,
             _ => false
         }
     }
 
-    pub fn is_operator(&self, c: char) -> bool {
+    fn is_operator(&self, c: char) -> bool {
         match c {
             '+'|'-'|'*'|'/'|'^' => true,
             _ => false
         }
     }
 
-    pub fn is_space(&self, c: char) -> bool {
+    fn is_space(&self, c: char) -> bool {
         match c {
             ' '|'\n' => true,
             _ => false
         }
     }
 
-    pub fn is_e(&self, c: char) -> bool {
+    fn is_e(&self, c: char) -> bool {
         match c {
             'e' => true,
             _ => false
         }
     }
 
-    pub fn is_end(&self, c: char) -> bool {
+    fn is_end(&self, c: char) -> bool {
         match c {
             '\0' => true,
             _ => false
