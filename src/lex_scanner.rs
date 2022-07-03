@@ -60,14 +60,15 @@ impl LexScanner {
                         },
                         false => {
                             self.state = NOT_DIGIT;
-                            self.pos -= 1;
                         }
                     }
                 }
                 NOT_DIGIT => {
+                    self.pos -= 1;
                     return Token { tipo: DIGIT, termo: buffer.to_string() };
                 }
                 OPERATOR => {
+                    self.pos -= 1;
                     return Token { tipo: OPERATOR, termo: buffer.to_string() };
                 }
                 _ => ()
