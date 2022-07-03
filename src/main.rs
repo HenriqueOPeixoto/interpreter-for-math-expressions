@@ -4,7 +4,9 @@ mod lex_scanner;
 use std::env;
 use std::fs;
 
+use lex_scanner::EOF;
 use lex_scanner::LexScanner;
+use token::Token;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -26,7 +28,12 @@ fn main() {
         pos: 0
     };
 
-    lex.next_token();
+    let mut token: Token;
+    loop {
+        token = lex.next_token();
+        
+        if token.tipo == EOF { break; }
+    }
     
 
 }
