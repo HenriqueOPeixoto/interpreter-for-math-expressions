@@ -4,6 +4,7 @@ pub const DIGIT: i32 = 1;
 pub const NOT_DIGIT: i32 = 2;
 pub const OPERATOR: i32 = 3;
 pub const SPACE: i32 = 4;
+pub const NOT_SPACE: i32 = 6;
 pub const EXP: i32 = 7;
 
 pub const EOF: i32 = -1;
@@ -69,6 +70,19 @@ impl LexScanner {
                 }
                 OPERATOR => {
                     return Token { tipo: OPERATOR, termo: buffer.to_string() };
+                }
+                SPACE => {
+                    match self.is_space(c) {
+                        true => {
+                            buffer.push(c);
+                            self.state = SPACE;
+                        },
+                        false => { self.state = NOT_SPACE }
+                    }
+                }
+                NOT_SPACE => {
+                    self.pos -= 1;
+                    return Token { tipo: SPACE, termo: buffer.to_string() }
                 }
                 _ => ()
             };
