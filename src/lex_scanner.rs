@@ -4,7 +4,7 @@ pub const DIGIT: i32 = 1;
 pub const NOT_DIGIT: i32 = 2;
 pub const OPERATOR: i32 = 3;
 pub const SPACE: i32 = 4;
-pub const NOT_SPACE: i32 = 6;
+pub const NOT_SPACE: i32 = 5;
 pub const EXP: i32 = 7;
 
 pub const EOF: i32 = -1;
@@ -22,6 +22,10 @@ impl LexScanner {
 
     pub fn next_token(&mut self) -> Token {
 
+        if self.pos == self.content.len() {
+            return Token { tipo: EOF, termo: "".to_string() }
+        }
+
         self.state = 0;
 
         let mut c: char;
@@ -30,9 +34,7 @@ impl LexScanner {
         loop {
             c = self.content[self.pos];
 
-            if self.is_end(c) {
-                return Token { tipo: EOF, termo: "".to_string() }
-            }
+            
 
             match self.state {
                 0 => {
@@ -93,9 +95,15 @@ impl LexScanner {
 
             self.pos += 1;
             
-            /* if self.pos == self.content.len() { 
-                return Token { tipo: self.state, termo: buffer.to_string() };
-            } */
+            if self.is_end(c) {
+                if self.state != OPERATOR {
+                    self.state -= 1; // Sai do estado NOT_X para o estado X.
+                }
+
+                return Token { tipo: self.state, termo: buffer.to_string() }
+            }
+
+
         }
     }
 
