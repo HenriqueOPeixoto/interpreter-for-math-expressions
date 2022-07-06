@@ -44,12 +44,12 @@
     First (T'') = { /, ε }
     First (P') = { ^, ε }
 
-    Follow (E) = { }
-    Follow (T) = { }
-    Follow (P) = { }
-    Follow (F) = { }
-    Follow (E') = { }
-    Follow (E'') = { }
-    Follow (T') = { }
-    Follow (T'') = { }
-    Follow (P') = { }
+    Follow (E) = { ), $ }
+    Follow (T) = { } U First(E') U First(E'') = { +, -, $ }
+    Follow (P) = { } U First(T') U First(T'') = { *, /, $ }
+    Follow (F) = { ] } U First(P') = { ], ^, $ }
+    Follow (E') = { } U Follow(E) = { ), $ }
+    Follow (E'') = { } U Follow(E) = { ), $ }
+    Follow (T') = { } U Follow(T) = { +, -, $ }
+    Follow (T'') = { } U Follow(T) = { +, -, $ }
+    Follow (P') = { } U Follow(P) = { *, /, $ }
