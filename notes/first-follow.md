@@ -23,7 +23,7 @@
      <P> -> <P>^<F> | exp[<F>] | <F>
 
      P -> FP' | exp[F]
-     P' -> ^P' | ε
+     P' -> ^FP' | ε
 
 
 # First e Follow
