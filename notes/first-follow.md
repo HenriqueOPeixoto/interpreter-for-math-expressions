@@ -37,9 +37,9 @@
     First (P') = { ^, ε }
 
     Follow (E) = { ), $ }
-    Follow (T) = { } U First(E') = { +, -, $ }
-    Follow (P) = { } U First(T') = { *, /, $ }
-    Follow (F) = { ] } U First(P') = { ], ^, $ }
+    Follow (T) = { } U First(E') = { +, -, ), $ }
+    Follow (P) = { } U First(T') = { *, /, +, -, ), $ }
+    Follow (F) = { ] } U First(P') = { ], ^, *, /, +, -, ), $ }
     Follow (E') = { } U Follow(E) = { ), $ }
-    Follow (T') = { } U Follow(T) = { +, -, $ }
-    Follow (P') = { } U Follow(P) = { *, /, $ }
+    Follow (T') = { } U Follow(T) = { +, -, ), $ }
+    Follow (P') = { } U Follow(P) = { *, /, +, -, ), $ }
