@@ -1,5 +1,6 @@
 mod token;
 mod lex_scanner;
+mod parser;
 
 use std::env;
 use std::fs;
