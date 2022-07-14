@@ -41,7 +41,8 @@ fn main() {
 
         if token.tipo == EOF { break; }
     }
-    
+
+    parser::prepare_parse_table();
 
 }
 
