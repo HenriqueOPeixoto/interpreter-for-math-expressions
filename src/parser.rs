@@ -3,17 +3,19 @@ use crate::{token::Token, lex_scanner::EOF};
 use std::collections::HashMap;
 
 struct Parser {
-    tokens: Vec<Token>,
-    pos: usize,
-    parse_table: HashMap<String, String>
+    //tokens: Vec<Token>,
+    //pos: usize,
+    //parse_table: HashMap<String, String>
 }
 
 impl Parser {
-    pub fn parse_syntax(&mut self) -> bool {
+    pub fn parse_syntax(&mut self, tokens: Vec<Token>) -> bool {
+
+        let mut pos = 0;
         
         let final_token: Token = Token { tipo: EOF, termo: "$".to_string() };
 
-        while self.tokens[self.pos].termo != final_token.termo {
+        while tokens[pos].termo != final_token.termo {
             todo!()
         }
 
@@ -22,8 +24,11 @@ impl Parser {
         true
     }
 
-    pub fn prepare_parse_table(&mut self) {
-        self.parse_table = HashMap::from([
+    
+}
+
+pub fn prepare_parse_table() {
+        let parse_table = HashMap::from([
             ("E".to_string(), "exp".to_string()),
             ("E".to_string(), "(".to_string()),
             ("E".to_string(), "id".to_string()),
@@ -96,4 +101,3 @@ impl Parser {
             ("P1".to_string(), ")".to_string())
         ]);
     }
-}
