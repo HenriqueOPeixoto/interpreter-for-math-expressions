@@ -1,12 +1,15 @@
 use crate::{token::Token, lex_scanner::EOF};
 
+use std::collections::HashMap;
+
 struct Parser {
     tokens: Vec<Token>,
-    pos: usize
+    pos: usize,
+    parse_table: HashMap<String, String>
 }
 
 impl Parser {
-    pub fn parse_syntax(&mut self, parse_table: Vec<(char, &str)>) -> bool {
+    pub fn parse_syntax(&mut self) -> bool {
         
         let final_token: Token = Token { tipo: EOF, termo: "$".to_string() };
 
@@ -17,5 +20,80 @@ impl Parser {
         
 
         true
+    }
+
+    pub fn prepare_parse_table(&mut self) {
+        self.parse_table = HashMap::from([
+            ("E".to_string(), "exp".to_string()),
+            ("E".to_string(), "(".to_string()),
+            ("E".to_string(), "id".to_string()),
+            ("E".to_string(), "+".to_string()),
+            ("E".to_string(), "$".to_string()),
+            ("E".to_string(), "-".to_string()),
+            ("E".to_string(), "*".to_string()),
+            ("E".to_string(), "/".to_string()),
+            ("E".to_string(), "^".to_string()),
+            ("E".to_string(), ")".to_string()),
+            ("T".to_string(), "exp".to_string()),
+            ("T".to_string(), "(".to_string()),
+            ("T".to_string(), "id".to_string()),
+            ("T".to_string(), "+".to_string()),
+            ("T".to_string(), "$".to_string()),
+            ("T".to_string(), "-".to_string()),
+            ("T".to_string(), "*".to_string()),
+            ("T".to_string(), "/".to_string()),
+            ("T".to_string(), "^".to_string()),
+            ("T".to_string(), ")".to_string()),
+            ("P".to_string(), "exp".to_string()),
+            ("P".to_string(), "(".to_string()),
+            ("P".to_string(), "id".to_string()),
+            ("P".to_string(), "+".to_string()),
+            ("P".to_string(), "$".to_string()),
+            ("P".to_string(), "-".to_string()),
+            ("P".to_string(), "*".to_string()),
+            ("P".to_string(), "/".to_string()),
+            ("P".to_string(), "^".to_string()),
+            ("P".to_string(), ")".to_string()),
+            ("F".to_string(), "exp".to_string()),
+            ("F".to_string(), "(".to_string()),
+            ("F".to_string(), "id".to_string()),
+            ("F".to_string(), "+".to_string()),
+            ("F".to_string(), "$".to_string()),
+            ("F".to_string(), "-".to_string()),
+            ("F".to_string(), "*".to_string()),
+            ("F".to_string(), "/".to_string()),
+            ("F".to_string(), "^".to_string()),
+            ("F".to_string(), ")".to_string()),
+            ("E1".to_string(), "exp".to_string()),
+            ("E1".to_string(), "(".to_string()),
+            ("E1".to_string(), "id".to_string()),
+            ("E1".to_string(), "+".to_string()),
+            ("E1".to_string(), "$".to_string()),
+            ("E1".to_string(), "-".to_string()),
+            ("E1".to_string(), "*".to_string()),
+            ("E1".to_string(), "/".to_string()),
+            ("E1".to_string(), "^".to_string()),
+            ("E1".to_string(), ")".to_string()),
+            ("T1".to_string(), "exp".to_string()),
+            ("T1".to_string(), "(".to_string()),
+            ("T1".to_string(), "id".to_string()),
+            ("T1".to_string(), "+".to_string()),
+            ("T1".to_string(), "$".to_string()),
+            ("T1".to_string(), "-".to_string()),
+            ("T1".to_string(), "*".to_string()),
+            ("T1".to_string(), "/".to_string()),
+            ("T1".to_string(), "^".to_string()),
+            ("T1".to_string(), ")".to_string()),
+            ("P1".to_string(), "exp".to_string()),
+            ("P1".to_string(), "(".to_string()),
+            ("P1".to_string(), "id".to_string()),
+            ("P1".to_string(), "+".to_string()),
+            ("P1".to_string(), "$".to_string()),
+            ("P1".to_string(), "-".to_string()),
+            ("P1".to_string(), "*".to_string()),
+            ("P1".to_string(), "/".to_string()),
+            ("P1".to_string(), "^".to_string()),
+            ("P1".to_string(), ")".to_string())
+        ]);
     }
 }
