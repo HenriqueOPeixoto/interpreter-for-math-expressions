@@ -1,4 +1,4 @@
-use crate::{token::Token, lex_scanner::EOF};
+use crate::{token::Token, lex_scanner::EOF, lex_scanner::DIGIT};
 
 use std::collections::HashMap;
 
@@ -23,13 +23,26 @@ const DIV: i32 = 7;
 const POW: i32 = 8;
 const CLOSE_PAR: i32 = 10;
 
-pub fn parse_syntax(tokens: Vec<Token>) -> bool {
+pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
 
+    let parse_table = prepare_parse_table();
+    
     let mut pos = 0;
+    let mut stack: Vec<&str> = vec!["$", "E"];
+
+    println!("{:?}", stack);
+    
+    tokens.reverse();
     
     let final_token: Token = Token { tipo: EOF, termo: "$".to_string() };
 
     while tokens[pos].termo != final_token.termo {
+
+        if tokens[pos].tipo == DIGIT {
+            todo!()
+        }
+
+        pos += 1;
         todo!()
     }
 

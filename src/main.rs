@@ -34,12 +34,14 @@ fn main() {
     };
 
     let mut token: Token;
+    let mut tokens: Vec<Token> = vec![Token { tipo: EOF, termo: "".to_string() }];
     loop {
         token = lex.next_token();
         
         token.to_string();
-
         if token.tipo == EOF { break; }
+
+        tokens.push(token);
     }
 
     let parse_table = parser::prepare_parse_table();
@@ -48,6 +50,8 @@ fn main() {
 
     println!("{}", parse_table[0][2]);
     println!("{}", parse_table[0][3]);
+
+    parser::parse_syntax(tokens);
 
 }
 
