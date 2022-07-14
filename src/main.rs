@@ -42,7 +42,12 @@ fn main() {
         if token.tipo == EOF { break; }
     }
 
-    parser::prepare_parse_table();
+    let parse_table = parser::prepare_parse_table();
+
+    println!("{:?}", parse_table);
+
+    println!("{}", parse_table[0][2]);
+    println!("{}", parse_table[0][3]);
 
 }
 
