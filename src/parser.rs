@@ -2,7 +2,7 @@ use crate::{token::Token, lex_scanner::EOF};
 
 use std::collections::HashMap;
 
-pub fn parse_syntax(&mut self, tokens: Vec<Token>) -> bool {
+pub fn parse_syntax(tokens: Vec<Token>) -> bool {
 
     let mut pos = 0;
     
@@ -17,7 +17,7 @@ pub fn parse_syntax(&mut self, tokens: Vec<Token>) -> bool {
     true
 }
 
-pub fn prepare_parse_table() {
+pub fn prepare_parse_table() -> HashMap<String, String> {
         let parse_table = HashMap::from([
             ("E".to_string(), "exp".to_string()),
             ("E".to_string(), "(".to_string()),
@@ -89,5 +89,8 @@ pub fn prepare_parse_table() {
             ("P1".to_string(), "/".to_string()),
             ("P1".to_string(), "^".to_string()),
             ("P1".to_string(), ")".to_string())
+
         ]);
+
+        parse_table
     }
