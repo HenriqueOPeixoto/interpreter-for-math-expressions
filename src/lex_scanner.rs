@@ -31,14 +31,14 @@ impl LexScanner {
         if self.pos == self.content.len() {
             return Token {
                 tipo: EOF,
-                termo: "".to_string(),
+                termo: "$".to_string(),
             };
         }
 
         if self.is_end(self.content[self.pos]) {
             return Token {
                 tipo: EOF,
-                termo: "".to_string(),
+                termo: "$".to_string(),
             };
         }
 
