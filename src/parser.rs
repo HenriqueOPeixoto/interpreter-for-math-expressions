@@ -46,7 +46,19 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
                     stack.pop();
                     stack.append(&mut parse_table[E][ID].split("|").collect());
                 },
-                _ => todo!()
+                "T" => {
+                    stack.pop();
+                    stack.append(&mut parse_table[T][ID].split("|").collect());
+                },
+                "P" => {
+                    stack.pop();
+                    stack.append(&mut parse_table[P][ID].split("|").collect());
+                },
+                "F" => {
+                    stack.pop();
+                    stack.append(&mut parse_table[F][ID].split("|").collect());
+                }
+                _ => panic!("Erro de sintaxe!")
             }
         }
 
