@@ -44,7 +44,7 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
             match stack.last().expect("Erro ao ler topo da pilha!").as_ref() { // gets &str from string
                 "E" => {
                     stack.pop();
-                    stack.push(parse_table[E][ID]);
+                    stack.append(&mut parse_table[E][ID].split("|").collect());
                 },
                 _ => todo!()
             }
@@ -135,14 +135,16 @@ pub fn prepare_parse_table() -> Vec<Vec<&'static str>> {
 
     
     
+        // char '|' is the separator when appending the derivation to the stack
+        // T|E1 turns into [T, E1]
         let parse_table: Vec<Vec<&'static str>> = vec![
-            vec!["TE1", "TE1", "TE1", "", "", "", "", "", "", ""],
-            vec!["PT1", "PT1", "PT1", "", "", "", "", "", "", ""],
-            vec!["exp[F]", "FP1", "FP1", "", "", "", "", "", "", ""],
-            vec!["", "(E)", "id", "", "", "", "", "", "", ""],
-            vec!["", "", "", "+TE1", "epsilon", "-TE1", "", "", "", "epsilon"],
-            vec!["", "", "", "epsilon", "epsilon", "epsilon", "*PT1", "/PT1", "", "epsilon"],
-            vec!["", "", "", "epsilon", "epsilon", "epsilon", "epsilon", "epsilon", "^FP1", "epsilon"]
+            vec!["T|E1", "T|E1", "T|E1", "", "", "", "", "", "", ""],
+            vec!["P|T1", "P|T1", "P|T1", "", "", "", "", "", "", ""],
+            vec!["exp[|F|]", "F|P1", "F|P1", "", "", "", "", "", "", ""],
+            vec!["", "(|E|)", "id", "", "", "", "", "", "", ""],
+            vec!["", "", "", "+|T|E1", "epsilon", "-|T|E1", "", "", "", "epsilon"],
+            vec!["", "", "", "epsilon", "epsilon", "epsilon", "*|P|T1", "/|P|T1", "", "epsilon"],
+            vec!["", "", "", "epsilon", "epsilon", "epsilon", "epsilon", "epsilon", "^|F|P1", "epsilon"]
         ];
 
         parse_table
