@@ -34,7 +34,7 @@ fn main() {
     };
 
     let mut token: Token;
-    let mut tokens: Vec<Token> = vec![Token { tipo: EOF, termo: "".to_string() }];
+    let mut tokens: Vec<Token> = vec![lex.next_token()];//vec![Token { tipo: EOF, termo: "".to_string() }];
     loop {
         token = lex.next_token();
         
