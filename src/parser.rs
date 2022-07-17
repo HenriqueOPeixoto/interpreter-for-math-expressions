@@ -1,4 +1,4 @@
-use crate::{token::Token, lex_scanner::EOF, lex_scanner::DIGIT};
+use crate::{token::Token, lex_scanner::{EOF, OPERATOR}, lex_scanner::{DIGIT, EXP1, CLOSE_PAR, OPEN_PAR}};
 
 // Regras
 const E: usize = 0;
@@ -10,16 +10,16 @@ const T1: usize = 5;
 const P1: usize = 6;
 
 // Terminais
-const EXP: usize= 0;
-const OPEN_PAR: usize = 1;
-const ID: usize = 2;
-const SUM: usize = 3;
-const END_OF_STACK: usize = 4;
-const SUB: usize = 5;
-const MUL: usize = 6;
-const DIV: usize = 7;
-const POW: usize = 8;
-const CLOSE_PAR: usize = 10;
+const T_EXP: usize= 0;
+const T_OPEN_PAR: usize = 1;
+const T_ID: usize = 2;
+const T_SUM: usize = 3;
+const T_END_OF_STACK: usize = 4;
+const T_SUB: usize = 5;
+const T_MUL: usize = 6;
+const T_DIV: usize = 7;
+const T_POW: usize = 8;
+const T_CLOSE_PAR: usize = 10;
 
 // TODO: mapear os tokens com relação aos terminais
 
@@ -44,25 +44,25 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
             match stack.last().expect("Erro ao ler topo da pilha!").as_ref() { // gets &str from string
                 "E" => {
                     stack.pop();
-                    let mut derivation: Vec<&str> = parse_table[E][ID].split("|").collect();
+                    let mut derivation: Vec<&str> = parse_table[E][T_ID].split("|").collect();
                     derivation.reverse();
                     stack.append(&mut derivation);
                 },
                 "T" => {
                     stack.pop();
-                    let mut derivation: Vec<&str> = parse_table[T][ID].split("|").collect();
+                    let mut derivation: Vec<&str> = parse_table[T][T_ID].split("|").collect();
                     derivation.reverse();
                     stack.append(&mut derivation);
                 },
                 "P" => {
                     stack.pop();
-                    let mut derivation: Vec<&str> = parse_table[P][ID].split("|").collect();
+                    let mut derivation: Vec<&str> = parse_table[P][T_ID].split("|").collect();
                     derivation.reverse();
                     stack.append(&mut derivation);
                 },
                 "F" => {
                     stack.pop();
-                    let mut derivation: Vec<&str> = parse_table[F][ID].split("|").collect();
+                    let mut derivation: Vec<&str> = parse_table[F][T_ID].split("|").collect();
                     derivation.reverse();
                     stack.append(&mut derivation);
                 },
@@ -72,7 +72,15 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
                 }
                 _ => panic!("Erro de sintaxe!")
             }
-        }
+        } else if token_atual.tipo == OPERATOR {
+            todo!()
+        } else if token_atual.tipo == EXP1 {
+            todo!()
+        } else if token_atual.tipo == OPEN_PAR {
+            todo!()
+        } else if token_atual.tipo == CLOSE_PAR {
+            todo!()
+        } 
 
         //pos -= 1;
     }
