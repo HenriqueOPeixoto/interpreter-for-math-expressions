@@ -29,7 +29,7 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
 
     let parse_table = prepare_parse_table();
     
-    let mut pos = tokens.len() - 1;
+    //let mut pos = tokens.len() - 1;
     let mut stack: Vec<&str> = vec!["$", "E"];
 
     println!("{:?}", stack);
@@ -37,10 +37,12 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
     tokens.reverse();
     
     let final_token: Token = Token { tipo: EOF, termo: "$".to_string() };
+ 
+    while tokens.last().expect("Erro ao ler o próximo token da pilha!").termo != final_token.termo {
 
-    while tokens[pos].termo != final_token.termo {
+        let token_atual = tokens.last().expect("Erro ao ler o próximo token da pilha!");
 
-        if tokens[pos].tipo == DIGIT {
+        if token_atual.tipo == DIGIT {
             match stack.last().expect("Erro ao ler topo da pilha!").as_ref() { // gets &str from string
                 "E" => {
                     stack.pop();
@@ -65,12 +67,16 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
                     let mut derivation: Vec<&str> = parse_table[F][ID].split("|").collect();
                     derivation.reverse();
                     stack.append(&mut derivation);
+                },
+                "id" => {
+                    stack.pop();
+                    tokens.pop();
                 }
                 _ => panic!("Erro de sintaxe!")
             }
         }
 
-        pos -= 1;
+        //pos -= 1;
     }
 
     
