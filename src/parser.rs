@@ -44,19 +44,27 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
             match stack.last().expect("Erro ao ler topo da pilha!").as_ref() { // gets &str from string
                 "E" => {
                     stack.pop();
-                    stack.append(&mut parse_table[E][ID].split("|").collect());
+                    let mut derivation: Vec<&str> = parse_table[E][ID].split("|").collect();
+                    derivation.reverse();
+                    stack.append(&mut derivation);
                 },
                 "T" => {
                     stack.pop();
-                    stack.append(&mut parse_table[T][ID].split("|").collect());
+                    let mut derivation: Vec<&str> = parse_table[T][ID].split("|").collect();
+                    derivation.reverse();
+                    stack.append(&mut derivation);
                 },
                 "P" => {
                     stack.pop();
-                    stack.append(&mut parse_table[P][ID].split("|").collect());
+                    let mut derivation: Vec<&str> = parse_table[P][ID].split("|").collect();
+                    derivation.reverse();
+                    stack.append(&mut derivation);
                 },
                 "F" => {
                     stack.pop();
-                    stack.append(&mut parse_table[F][ID].split("|").collect());
+                    let mut derivation: Vec<&str> = parse_table[F][ID].split("|").collect();
+                    derivation.reverse();
+                    stack.append(&mut derivation);
                 }
                 _ => panic!("Erro de sintaxe!")
             }
