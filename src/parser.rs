@@ -3,31 +3,33 @@ use crate::{token::Token, lex_scanner::EOF, lex_scanner::DIGIT};
 use std::collections::HashMap;
 
 // Regras
-const E: i32 = 0;
-const T: i32 = 1;
-const P: i32 = 2;
-const F: i32 = 3;
-const E1: i32 = 4;
-const T1: i32 = 5;
-const P1: i32 = 6;
+const E: usize = 0;
+const T: usize = 1;
+const P: usize = 2;
+const F: usize = 3;
+const E1: usize = 4;
+const T1: usize = 5;
+const P1: usize = 6;
 
 // Terminais
-const EXP: i32 = 0;
-const OPEN_PAR: i32 = 1;
-const ID: i32 = 2;
-const SUM: i32 = 3;
-const END_OF_STACK: i32 = 4;
-const SUB: i32 = 5;
-const MUL: i32 = 6;
-const DIV: i32 = 7;
-const POW: i32 = 8;
-const CLOSE_PAR: i32 = 10;
+const EXP: usize= 0;
+const OPEN_PAR: usize = 1;
+const ID: usize = 2;
+const SUM: usize = 3;
+const END_OF_STACK: usize = 4;
+const SUB: usize = 5;
+const MUL: usize = 6;
+const DIV: usize = 7;
+const POW: usize = 8;
+const CLOSE_PAR: usize = 10;
+
+// TODO: mapear os tokens com relação aos terminais
 
 pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
 
     let parse_table = prepare_parse_table();
     
-    let mut pos = 0;
+    let mut pos = tokens.len() - 1;
     let mut stack: Vec<&str> = vec!["$", "E"];
 
     println!("{:?}", stack);
@@ -39,11 +41,16 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
     while tokens[pos].termo != final_token.termo {
 
         if tokens[pos].tipo == DIGIT {
-            todo!()
+            match stack.last().expect("Erro ao ler topo da pilha!").as_ref() { // gets &str from string
+                "E" => {
+                    stack.pop();
+                    stack.push(parse_table[E][ID]);
+                },
+                _ => todo!()
+            }
         }
 
-        pos += 1;
-        todo!()
+        pos -= 1;
     }
 
     
