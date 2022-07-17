@@ -1,7 +1,5 @@
 use crate::{token::Token, lex_scanner::EOF, lex_scanner::DIGIT};
 
-use std::collections::HashMap;
-
 // Regras
 const E: usize = 0;
 const T: usize = 1;
