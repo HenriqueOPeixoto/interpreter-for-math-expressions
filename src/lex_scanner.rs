@@ -5,6 +5,7 @@ pub const NOT_DIGIT: i32 = 2;
 pub const OPERATOR: i32 = 3;
 pub const SPACE: i32 = 4;
 pub const NOT_SPACE: i32 = 5;
+pub const NEWLINE: i32 = 6;
 pub const EXP1: i32 = 7;
 pub const EXP2: i32 = 8;
 
@@ -111,10 +112,18 @@ impl LexScanner {
                 },
                 NOT_SPACE => {
                     self.pos -= 1;
-                    return Token {
-                        tipo: SPACE,
-                        termo: buffer.to_string(),
-                    };
+
+                    if self.is_newline(c) {
+                        return Token {
+                            tipo: NEWLINE,
+                            termo: "$".to_string()
+                        }
+                    } else {
+                        return Token {
+                            tipo: SPACE,
+                            termo: buffer.to_string(),
+                        };
+                    }
                 }
                 EXP1 => match c {
                     'x' => {
@@ -236,6 +245,14 @@ impl LexScanner {
             _ => false,
         }
     }
+
+    fn is_newline(&self, c: char) -> bool {
+        match c {
+            '\n' => true,
+            _ => false
+        }
+    }
+
 }
 
 pub fn is_sum_operator(token: &Token) -> bool {
