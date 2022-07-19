@@ -244,3 +244,31 @@ pub fn is_sum_operator(token: &Token) -> bool {
         _ => false
     }
 }
+
+pub fn is_sub_operator(token: &Token) -> bool {
+    match token.termo.as_str() {
+        "-" => true,
+        _ => false
+    }
+}
+
+pub fn is_mul_operator(token: &Token) -> bool {
+    match token.termo.as_str() {
+        "*" => true,
+        _ => false
+    }
+}
+
+pub fn is_div_operator(token: &Token) -> bool {
+    match token.termo.as_str() {
+        "/" => true,
+        _ => false
+    }
+}
+
+pub fn is_pow_operator(token: &Token) -> bool {
+    match token.termo.as_str() {
+        "^" => true,
+        _ => false
+    }
+}
