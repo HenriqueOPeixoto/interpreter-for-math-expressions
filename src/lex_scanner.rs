@@ -113,7 +113,7 @@ impl LexScanner {
                 NOT_SPACE => {
                     self.pos -= 1;
 
-                    if self.is_newline(c) {
+                    if buffer.contains("\n") {
                         return Token {
                             tipo: NEWLINE,
                             termo: "$".to_string()
