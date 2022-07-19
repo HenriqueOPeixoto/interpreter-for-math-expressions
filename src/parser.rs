@@ -165,7 +165,37 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
         } else if token_atual.tipo == EXP1 {
             todo!()
         } else if token_atual.tipo == OPEN_PAR {
-            todo!()
+            match stack.last().expect("Erro ao ler topo da pilha!").as_ref() {
+                "E" => {
+                    stack.pop();
+                    let mut derivation: Vec<&str> = parse_table[E][T_OPEN_PAR].split("|").collect();
+                    derivation.reverse();
+                    stack.append(&mut derivation);
+                },
+                "T" => {
+                    stack.pop();
+                    let mut derivation: Vec<&str> = parse_table[T][T_OPEN_PAR].split("|").collect();
+                    derivation.reverse();
+                    stack.append(&mut derivation);
+                },
+                "P" => {
+                    stack.pop();
+                    let mut derivation: Vec<&str> = parse_table[P][T_OPEN_PAR].split("|").collect();
+                    derivation.reverse();
+                    stack.append(&mut derivation);
+                },
+                "F" => {
+                    stack.pop();
+                    let mut derivation: Vec<&str> = parse_table[F][T_OPEN_PAR].split("|").collect();
+                    derivation.reverse();
+                    stack.append(&mut derivation);
+                },
+                "(" => {
+                    stack.pop();
+                    tokens.pop();
+                },
+                _ => panic!("Erro de sintaxe")
+            }
         } else if token_atual.tipo == CLOSE_PAR {
             todo!()
         } 
