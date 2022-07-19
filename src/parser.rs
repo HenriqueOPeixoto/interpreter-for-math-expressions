@@ -83,16 +83,82 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
                     },
                     "T1" => {
                         stack.pop();
-                        let mut derivation: Vec<&str> = parse_table[T1][T_SUM].split("|").collect();
+                    },
+                    "P1" => {
+                        stack.pop();
+                    },
+                    "+" => {
+                        stack.pop();
+                        tokens.pop();
+                    }
+                    _ => panic!("Erro de sintaxe")
+                }
+            } else if lex_scanner::is_sub_operator(token_atual) {
+                match stack.last().expect("Erro ao ler topo da pilha!").as_ref() {
+                    "E1" => {
+                        stack.pop();
+                        let mut derivation: Vec<&str> = parse_table[E1][T_SUB].split("|").collect();
+                        derivation.reverse();
+                        stack.append(&mut derivation);
+                    },
+                    "T1" => {
+                        stack.pop();
+                    },
+                    "P1" => {
+                        stack.pop();
+                    },
+                    "-" => {
+                        stack.pop();
+                        tokens.pop();
+                    }
+                    _ => panic!("Erro de sintaxe")
+                }
+            } else if lex_scanner::is_mul_operator(token_atual) {
+                match stack.last().expect("Erro ao ler topo da pilha!").as_ref() {
+                    "T1" => {
+                        stack.pop();
+                        let mut derivation: Vec<&str> = parse_table[T1][T_MUL].split("|").collect();
                         derivation.reverse();
                         stack.append(&mut derivation);
                     },
                     "P1" => {
                         stack.pop();
-                        let mut derivation: Vec<&str> = parse_table[P1][T_SUM].split("|").collect();
+                    },
+                    "*" => {
+                        stack.pop();
+                        tokens.pop();
+                    }
+                    _ => panic!("Erro de sintaxe")
+                }
+            } else if lex_scanner::is_div_operator(token_atual) {
+                match stack.last().expect("Erro ao ler topo da pilha!").as_ref() {
+                    "T1" => {
+                        stack.pop();
+                        let mut derivation: Vec<&str> = parse_table[T1][T_DIV].split("|").collect();
                         derivation.reverse();
                         stack.append(&mut derivation);
                     },
+                    "P1" => {
+                        stack.pop();
+                    },
+                    "/" => {
+                        stack.pop();
+                        tokens.pop();
+                    }
+                    _ => panic!("Erro de sintaxe")
+                }
+            } else if lex_scanner::is_pow_operator(token_atual) {
+                match stack.last().expect("Erro ao ler topo da pilha!").as_ref() {
+                    "P1" => {
+                        stack.pop();
+                        let mut derivation: Vec<&str> = parse_table[P1][T_POW].split("|").collect();
+                        derivation.reverse();
+                        stack.append(&mut derivation);
+                    },
+                    "^" => {
+                        stack.pop();
+                        tokens.pop();
+                    }
                     _ => panic!("Erro de sintaxe")
                 }
             }
