@@ -246,13 +246,6 @@ impl LexScanner {
         }
     }
 
-    fn is_newline(&self, c: char) -> bool {
-        match c {
-            '\n' => true,
-            _ => false
-        }
-    }
-
 }
 
 pub fn is_sum_operator(token: &Token) -> bool {
