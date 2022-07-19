@@ -36,7 +36,7 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
     
     let final_token: Token = Token { tipo: EOF, termo: "$".to_string() };
  
-    while tokens.last().expect("Erro ao ler o próximo token da pilha!").termo != final_token.termo {
+    while tokens.last().expect("Erro ao ler o próximo token da pilha!").termo != final_token.termo || tokens.len() > 1 {
 
         let token_atual = tokens.last().expect("Erro ao ler o próximo token da pilha!");
 
@@ -165,7 +165,16 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
         } else if token_atual.tipo == SPACE {
             tokens.pop();
         } else if token_atual.tipo == NEWLINE {
-            todo!()
+            match stack.last().expect("Erro ao ler topo da pilha!").as_ref() {
+                "E1" => {stack.pop();} 
+                "T1" => {stack.pop();}
+                "P1" => {stack.pop();}
+                "$" => {
+                    stack.push("E");
+                    tokens.pop();
+                } // Iniciando uma nova expressão, reinicia a pilha com a regra E
+                _ => panic!("Erro de sintaxe")
+            }
         } else if token_atual.tipo == EXP1 {
             todo!()
         } else if token_atual.tipo == OPEN_PAR {
