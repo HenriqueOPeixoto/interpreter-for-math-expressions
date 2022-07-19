@@ -1,4 +1,4 @@
-use crate::{token::Token, lex_scanner::{EOF, OPERATOR}, lex_scanner::{DIGIT, EXP1, CLOSE_PAR, OPEN_PAR, self}};
+use crate::{token::Token, lex_scanner::{EOF, OPERATOR}, lex_scanner::{DIGIT, EXP1, CLOSE_PAR, OPEN_PAR, self, SPACE, NEWLINE}};
 
 // Regras
 const E: usize = 0;
@@ -162,6 +162,10 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
                     _ => panic!("Erro de sintaxe")
                 }
             }
+        } else if token_atual.tipo == SPACE {
+            tokens.pop();
+        } else if token_atual.tipo == NEWLINE {
+            todo!()
         } else if token_atual.tipo == EXP1 {
             todo!()
         } else if token_atual.tipo == OPEN_PAR {
