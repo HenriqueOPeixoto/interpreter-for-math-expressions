@@ -1,4 +1,4 @@
-use crate::{token::Token, lex_scanner::{EOF, OPERATOR}, lex_scanner::{DIGIT, EXP1, CLOSE_PAR, OPEN_PAR}};
+use crate::{token::Token, lex_scanner::{EOF, OPERATOR}, lex_scanner::{DIGIT, EXP1, CLOSE_PAR, OPEN_PAR, self}};
 
 // Regras
 const E: usize = 0;
@@ -73,7 +73,29 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
                 _ => panic!("Erro de sintaxe!")
             }
         } else if token_atual.tipo == OPERATOR {
-            todo!()
+            if lex_scanner::is_sum_operator(token_atual) {
+                match stack.last().expect("Erro ao ler topo da pilha!").as_ref() {
+                    "E1" => {
+                        stack.pop();
+                        let mut derivation: Vec<&str> = parse_table[E1][T_SUM].split("|").collect();
+                        derivation.reverse();
+                        stack.append(&mut derivation);
+                    },
+                    "T1" => {
+                        stack.pop();
+                        let mut derivation: Vec<&str> = parse_table[T1][T_SUM].split("|").collect();
+                        derivation.reverse();
+                        stack.append(&mut derivation);
+                    },
+                    "P1" => {
+                        stack.pop();
+                        let mut derivation: Vec<&str> = parse_table[P1][T_SUM].split("|").collect();
+                        derivation.reverse();
+                        stack.append(&mut derivation);
+                    },
+                    _ => panic!("Erro de sintaxe")
+                }
+            }
         } else if token_atual.tipo == EXP1 {
             todo!()
         } else if token_atual.tipo == OPEN_PAR {
