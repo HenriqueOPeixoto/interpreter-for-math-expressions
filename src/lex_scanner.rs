@@ -237,3 +237,10 @@ impl LexScanner {
         }
     }
 }
+
+pub fn is_sum_operator(token: &Token) -> bool {
+    match token.termo.as_str() {
+        "+" => true,
+        _ => false
+    }
+}
