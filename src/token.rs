@@ -1,3 +1,4 @@
+#[derive(Clone)]
 pub struct Token {
     pub tipo: i32,
     pub termo: String
