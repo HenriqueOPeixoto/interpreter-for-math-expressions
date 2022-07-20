@@ -260,7 +260,7 @@ pub fn prepare_parse_table() -> Vec<Vec<&'static str>> {
     let parse_table: Vec<Vec<&'static str>> = vec![
         vec!["T|E1", "T|E1", "T|E1", "", "", "", "", "", "", ""],
         vec!["P|T1", "P|T1", "P|T1", "", "", "", "", "", "", ""],
-        vec!["exp[|F|]", "F|P1", "F|P1", "", "", "", "", "", "", ""],
+        vec!["exp|[|F|]", "F|P1", "F|P1", "", "", "", "", "", "", ""],
         vec!["", "(|E|)", "id", "", "", "", "", "", "", ""],
         vec!["", "", "", "+|T|E1", "epsilon", "-|T|E1", "", "", "", "epsilon"],
         vec!["", "", "", "epsilon", "epsilon", "epsilon", "*|P|T1", "/|P|T1", "", "epsilon"],
