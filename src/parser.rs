@@ -14,12 +14,12 @@ const T_EXP: usize= 0;
 const T_OPEN_PAR: usize = 1;
 const T_ID: usize = 2;
 const T_SUM: usize = 3;
-const T_END_OF_STACK: usize = 4;
+// const T_END_OF_STACK: usize = 4;
 const T_SUB: usize = 5;
 const T_MUL: usize = 6;
 const T_DIV: usize = 7;
 const T_POW: usize = 8;
-const T_CLOSE_PAR: usize = 10;
+// const T_CLOSE_PAR: usize = 10;
 
 // TODO: mapear os tokens com relação aos terminais
 
@@ -281,7 +281,7 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
         //pos -= 1;
     }
 
-    
+
 
     true
 }
