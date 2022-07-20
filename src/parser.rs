@@ -25,6 +25,8 @@ const T_CLOSE_PAR: usize = 10;
 
 pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
 
+    let mut accepted: bool = false;
+
     let parse_table = prepare_parse_table();
     
     //let mut pos = tokens.len() - 1;
@@ -40,7 +42,7 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
     tokens.reverse();
     
  
-    while tokens.last().expect("Erro ao ler o próximo token da pilha!").termo != final_token.termo || tokens.len() > 1 {
+    while tokens.last().expect("Erro ao ler o próximo token da pilha!").termo != final_token.termo || accepted == false {
 
         let token_atual = tokens.last().expect("Erro ao ler o próximo token da pilha!");
 
@@ -261,6 +263,16 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
                 "]" => {
                     stack.pop();
                     tokens.pop();
+                }
+                _ => panic!("Erro de sintaxe")
+            }
+        } else if token_atual.tipo == EOF {
+            match stack.last().expect("Erro ao ler topo da pilha!").as_ref() {
+                "E1" => {stack.pop();} 
+                "T1" => {stack.pop();}
+                "P1" => {stack.pop();}
+                "$" => {
+                    accepted = true;
                 }
                 _ => panic!("Erro de sintaxe")
             }
