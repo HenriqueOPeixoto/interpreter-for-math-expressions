@@ -1,4 +1,4 @@
-use crate::{token::Token, lex_scanner::{EOF, OPERATOR}, lex_scanner::{DIGIT, EXP1, CLOSE_PAR, OPEN_PAR, self, SPACE, NEWLINE}};
+use crate::{token::Token, lex_scanner::{EOF, OPERATOR}, lex_scanner::{DIGIT, EXP1, CLOSE_PAR, OPEN_PAR, self, SPACE, NEWLINE, OPEN_SQ_BRACKET, CLOSE_SQ_BRACKET}};
 
 // Regras
 const E: usize = 0;
@@ -244,7 +244,23 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
                 }
                 _ => panic!("Erro de sintaxe")
             }
-        } 
+        } else if token_atual.tipo == OPEN_SQ_BRACKET {
+            match stack.last().expect("Erro ao ler topo da pilha!").as_ref() {
+                "[" => {
+                    stack.pop();
+                    tokens.pop();
+                }
+                _ => panic!("Erro de sintaxe")
+            }
+        } else if token_atual.tipo == CLOSE_SQ_BRACKET {
+            match stack.last().expect("Erro ao ler topo da pilha!").as_ref() {
+                "]" => {
+                    stack.pop();
+                    tokens.pop();
+                }
+                _ => panic!("Erro de sintaxe")
+            }
+        }
 
         //pos -= 1;
     }
