@@ -51,7 +51,7 @@ fn main() {
     println!("{}", parse_table[0][2]);
     println!("{}", parse_table[0][3]);
 
-    parser::parse_syntax(tokens);
+    println!("{}", parser::parse_syntax(tokens));
 
 }
 
