@@ -210,7 +210,16 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
                 _ => panic!("Erro de sintaxe")
             }
         } else if token_atual.tipo == CLOSE_PAR {
-            todo!()
+            match stack.last().expect("Erro ao ler topo da pilha!").as_ref() {
+                "E1" => {stack.pop();},
+                "T1" => {stack.pop();},
+                "P1" => {stack.pop();},
+                ")" => {
+                    stack.pop();
+                    tokens.pop();
+                }
+                _ => panic!("Erro de sintaxe")
+            }
         } 
 
         //pos -= 1;
