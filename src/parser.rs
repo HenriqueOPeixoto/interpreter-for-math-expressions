@@ -32,9 +32,13 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
 
     println!("{:?}", stack);
     
+    // Token used at the end of the token stack to signal the end of all input
+    let final_token: Token = Token { tipo: EOF, termo: "$$".to_string() };
+    
+    tokens.push(final_token.clone()); // Allowed because of the Clone trait
+    
     tokens.reverse();
     
-    let final_token: Token = Token { tipo: EOF, termo: "$".to_string() };
  
     while tokens.last().expect("Erro ao ler o próximo token da pilha!").termo != final_token.termo || tokens.len() > 1 {
 
