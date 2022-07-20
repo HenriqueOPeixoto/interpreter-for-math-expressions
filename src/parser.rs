@@ -21,8 +21,6 @@ const T_DIV: usize = 7;
 const T_POW: usize = 8;
 // const T_CLOSE_PAR: usize = 10;
 
-// TODO: mapear os tokens com relação aos terminais
-
 pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
 
     let mut accepted: bool = false;
