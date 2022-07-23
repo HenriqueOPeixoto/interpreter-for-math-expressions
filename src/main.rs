@@ -1,6 +1,7 @@
 mod token;
 mod lex_scanner;
 mod parser;
+mod semantics;
 
 use std::env;
 use std::fs;
@@ -51,7 +52,9 @@ fn main() {
     println!("{}", parse_table[0][2]);
     println!("{}", parse_table[0][3]);
 
-    println!("{}", parser::parse_syntax(tokens));
+    println!("{}", parser::parse_syntax(tokens.clone()));
+
+    println!("Resultado: {}", semantics::calculate_expr(tokens, 0))
 
 }
 
