@@ -9,6 +9,7 @@ const OP_WAITING: i32 = -1; // waiting result from inner expression
 const OP_NONE: i32 = 0;
 const OP_SUM: i32 = 1;
 const OP_SUB: i32 = 2;
+const OP_MUL: i32 = 3;
 
 pub fn calculate_expr(tokens: Vec<Token>, mut pos: usize) -> i32 {
     
@@ -39,6 +40,7 @@ pub fn calculate_expr(tokens: Vec<Token>, mut pos: usize) -> i32 {
                 match token.termo.as_str() {
                     "+" => { operation = OP_SUM },
                     "-" => { operation = OP_SUB },
+                    "*" => { operation = OP_MUL },
                     _ => todo!()
                 }
             },
@@ -53,6 +55,9 @@ pub fn calculate_expr(tokens: Vec<Token>, mut pos: usize) -> i32 {
                     },
                     OP_SUB => {
                         expr_result -= token.termo.parse::<i32>().unwrap();
+                    },
+                    OP_MUL => {
+                        expr_result *= token.termo.parse::<i32>().unwrap();
                     }
                     _ => todo!()
                 }
