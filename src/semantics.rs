@@ -8,6 +8,7 @@ use crate::{token::Token, lex_scanner::{OPEN_PAR, CLOSE_PAR, OPERATOR, DIGIT, SP
 const OP_WAITING: i32 = -1; // waiting result from inner expression
 const OP_NONE: i32 = 0;
 const OP_SUM: i32 = 1;
+const OP_SUB: i32 = 2;
 
 pub fn calculate_expr(tokens: Vec<Token>, mut pos: usize) -> i32 {
     
@@ -37,6 +38,7 @@ pub fn calculate_expr(tokens: Vec<Token>, mut pos: usize) -> i32 {
             OPERATOR => {
                 match token.termo.as_str() {
                     "+" => { operation = OP_SUM },
+                    "-" => { operation = OP_SUB },
                     _ => todo!()
                 }
             },
@@ -49,6 +51,9 @@ pub fn calculate_expr(tokens: Vec<Token>, mut pos: usize) -> i32 {
                     OP_SUM => {
                         expr_result += token.termo.parse::<i32>().unwrap();
                     },
+                    OP_SUB => {
+                        expr_result -= token.termo.parse::<i32>().unwrap();
+                    }
                     _ => todo!()
                 }
             },
