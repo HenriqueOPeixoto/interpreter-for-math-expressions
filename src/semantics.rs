@@ -95,8 +95,8 @@ pub fn calculate_expr_rpn(tokens: Vec<Token>) -> Token {
                     let operand_2_token = stack.pop().expect("Operando não encontrado");
                     let operand_1_token = stack.pop().expect("Operando não encontrado");
                     
-                    let operand_2 = &operand_2_token.termo.parse::<i32>().expect("Erro ao converter operando");
-                    let operand_1 = &operand_1_token.termo.parse::<i32>().expect("Erro ao converter operando");
+                    let operand_2 = &operand_2_token.termo.parse::<f32>().expect("Erro ao converter operando");
+                    let operand_1 = &operand_1_token.termo.parse::<f32>().expect("Erro ao converter operando");
 
                     stack.push(Token{ termo: (operand_1 + operand_2).to_string(), tipo: DIGIT });
                 },
@@ -104,8 +104,8 @@ pub fn calculate_expr_rpn(tokens: Vec<Token>) -> Token {
                     let operand_2_token = stack.pop().expect("Operando não encontrado");
                     let operand_1_token = stack.pop().expect("Operando não encontrado");
                     
-                    let operand_2 = &operand_2_token.termo.parse::<i32>().expect("Erro ao converter operando");
-                    let operand_1 = &operand_1_token.termo.parse::<i32>().expect("Erro ao converter operando");
+                    let operand_2 = &operand_2_token.termo.parse::<f32>().expect("Erro ao converter operando");
+                    let operand_1 = &operand_1_token.termo.parse::<f32>().expect("Erro ao converter operando");
 
                     stack.push(Token{ termo: (operand_1 - operand_2).to_string(), tipo: DIGIT });
                 },
@@ -113,8 +113,8 @@ pub fn calculate_expr_rpn(tokens: Vec<Token>) -> Token {
                     let operand_2_token = stack.pop().expect("Operando não encontrado");
                     let operand_1_token = stack.pop().expect("Operando não encontrado");
                     
-                    let operand_2 = &operand_2_token.termo.parse::<i32>().expect("Erro ao converter operando");
-                    let operand_1 = &operand_1_token.termo.parse::<i32>().expect("Erro ao converter operando");
+                    let operand_2 = &operand_2_token.termo.parse::<f32>().expect("Erro ao converter operando");
+                    let operand_1 = &operand_1_token.termo.parse::<f32>().expect("Erro ao converter operando");
 
                     stack.push(Token{ termo: (operand_1 * operand_2).to_string(), tipo: DIGIT });
                 },
@@ -122,8 +122,8 @@ pub fn calculate_expr_rpn(tokens: Vec<Token>) -> Token {
                     let operand_2_token = stack.pop().expect("Operando não encontrado");
                     let operand_1_token = stack.pop().expect("Operando não encontrado");
                     
-                    let operand_2 = &operand_2_token.termo.parse::<i32>().expect("Erro ao converter operando");
-                    let operand_1 = &operand_1_token.termo.parse::<i32>().expect("Erro ao converter operando");
+                    let operand_2 = &operand_2_token.termo.parse::<f32>().expect("Erro ao converter operando");
+                    let operand_1 = &operand_1_token.termo.parse::<f32>().expect("Erro ao converter operando");
 
                     stack.push(Token{ termo: (operand_1 / operand_2).to_string(), tipo: DIGIT });
                 },
