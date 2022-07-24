@@ -1,4 +1,4 @@
-use crate::{token::Token, lex_scanner::{DIGIT, OPERATOR, OPEN_PAR, CLOSE_PAR, NEWLINE, EXP1}};
+use crate::{token::Token, lex_scanner::{DIGIT, OPERATOR, OPEN_PAR, CLOSE_PAR, NEWLINE, EXP1, EOF}};
 
 /**
  * Code that manipulates Reverse Poland Notation
@@ -9,10 +9,13 @@ const MED_PRIORITY: i32 = 1; // Used in * and /
 const MAX_PRIORITY: i32 = 2; // Used in ^
 const UNARY_PRIORITY: i32 = 3; // Used in exp[]
 
-pub fn shunting_yard(tokens: Vec<Token>) -> Vec<Token> {
+pub fn shunting_yard(mut tokens: Vec<Token>) -> Vec<Token> {
 
     let mut out: Vec<Token> = vec![];
     let mut stack: Vec<Token> = vec![];
+
+    // Add EOF character
+    tokens.push(Token { tipo: EOF, termo: "$".to_string() });
 
     for token in &tokens {
         if token.tipo == DIGIT {
@@ -76,7 +79,7 @@ pub fn shunting_yard(tokens: Vec<Token>) -> Vec<Token> {
                     break; 
                 }
             }
-        } else if token.tipo == NEWLINE {
+        } else if token.tipo == NEWLINE || token.tipo == EOF {
             while !stack.is_empty() {
                 out.push(stack.pop().unwrap());
             }
