@@ -1,4 +1,4 @@
-use crate::{token::Token, lex_scanner::{DIGIT, OPERATOR, OPEN_PAR, CLOSE_PAR}};
+use crate::{token::Token, lex_scanner::{DIGIT, OPERATOR, OPEN_PAR, CLOSE_PAR, EOF, NEWLINE}};
 
 /**
  * Code that manipulates Reverse Poland Notation
@@ -63,6 +63,11 @@ pub fn shunting_yard(tokens: Vec<Token>) -> Vec<Token> {
                     break; 
                 }
             }
+        } else if token.tipo == NEWLINE {
+            while !stack.is_empty() {
+                out.push(stack.pop().unwrap());
+            }
+            out.push(token.clone())
         }
 
     }
