@@ -2,6 +2,9 @@ mod token;
 mod lex_scanner;
 mod parser;
 mod semantics;
+mod utils {
+    pub mod rpn;
+}
 
 use std::env;
 use std::fs;
@@ -9,6 +12,8 @@ use std::fs;
 use lex_scanner::EOF;
 use lex_scanner::LexScanner;
 use token::Token;
+
+use crate::utils::rpn;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -54,7 +59,9 @@ fn main() {
 
     println!("{}", parser::parse_syntax(tokens.clone()));
 
-    println!("Resultado: {}", semantics::calculate_expr(tokens, 0))
+    println!("Resultado: {}", semantics::calculate_expr(tokens.clone(), 0));
+
+    println!("RPN: {:?}", rpn::shunting_yard(tokens.clone()));
 
 }
 
