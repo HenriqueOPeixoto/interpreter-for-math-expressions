@@ -59,7 +59,7 @@ fn main() {
 
     println!("{}", parser::parse_syntax(tokens.clone()));
 
-    println!("Resultado: {}", semantics::calculate_expr(tokens.clone(), 0));
+    //println!("Resultado: {}", semantics::calculate_expr(tokens.clone(), 0));
 
     println!("RPN: {:?}", rpn::shunting_yard(tokens.clone()));
 
