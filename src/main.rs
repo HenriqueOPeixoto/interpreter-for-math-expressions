@@ -25,6 +25,8 @@ fn main() {
 
     let filename = &args[1];
 
+    println!("-> Lendo o arquivo {}...", filename);
+
     let file = fs::read_to_string(filename)
         .expect("Não foi possível ler o arquivo!");
 
@@ -32,7 +34,7 @@ fn main() {
 
     content.push('\0');
 
-    println!("{:?}", content);
+    println!("\n-> Iniciando análise léxica...");
 
     let mut lex = LexScanner {
         content: content,
@@ -45,23 +47,30 @@ fn main() {
     loop {
         token = lex.next_token();
         
-        token.to_string();
         if token.tipo == EOF { break; }
 
         tokens.push(token);
     }
 
-    let parse_table = parser::prepare_parse_table();
+    println!("Análise léxica concluída!");
+
+/*     let parse_table = parser::prepare_parse_table();
 
     println!("{:?}", parse_table);
 
     println!("{}", parse_table[0][2]);
-    println!("{}", parse_table[0][3]);
+    println!("{}", parse_table[0][3]); */
 
-    println!("{}", parser::parse_syntax(tokens.clone()));
+    println!("\n-> Iniciando a análise sintática...");
 
+    parser::parse_syntax(tokens.clone());
+
+    println!("Análise sintática concluída!");
+
+    println!("\n-> Convertendo entrada de valores infix para postfix...");
     let rpn_vec = rpn::shunting_yard(tokens.clone());
 
+    println!("Conversão das operações para postfix:");
     for token in &rpn_vec {
         print!("{}, ", token.termo);
         if token.tipo == NEWLINE {
@@ -71,7 +80,27 @@ fn main() {
 
     println!();
 
-    println!("{:?}", semantics::calculate_expr_rpn(rpn_vec.clone()))
+    println!("\n-> Iniciando análise semântica... Calculando o valor das expressões...");
+
+    let result_tokens = semantics::calculate_expr_rpn(rpn_vec.clone());
+    for token in &result_tokens {
+        println!("{}", token.termo);
+    }
     
+    println!(">>> Finalizado com sucesso <<<");
+    
+    println!("\nSAÍDA DO PROGRAMA: ");
+    let mut input_line: usize = 0;
+    tokens.push(Token { tipo: EOF, termo: "$".to_string()} );
+    for token in &tokens {
+
+        print!("{}", token.termo);
+        if token.tipo == NEWLINE || token.tipo == EOF {
+            println!(" = {}", result_tokens[input_line].termo);
+            input_line += 1;
+        }
+        
+    }
+
 }
 

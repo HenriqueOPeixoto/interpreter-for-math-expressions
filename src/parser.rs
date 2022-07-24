@@ -29,8 +29,6 @@ pub fn parse_syntax(mut tokens: Vec<Token>) -> bool {
     
     //let mut pos = tokens.len() - 1;
     let mut stack: Vec<&str> = vec!["$", "E"];
-
-    println!("{:?}", stack);
     
     // Token used at the end of the token stack to signal the end of all input
     let final_token: Token = Token { tipo: EOF, termo: "$$".to_string() };
