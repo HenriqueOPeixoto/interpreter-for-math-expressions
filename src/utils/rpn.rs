@@ -1,4 +1,4 @@
-use crate::{token::Token, lex_scanner::{DIGIT, OPERATOR, OPEN_PAR, CLOSE_PAR, EOF, NEWLINE, EXP1}};
+use crate::{token::Token, lex_scanner::{DIGIT, OPERATOR, OPEN_PAR, CLOSE_PAR, NEWLINE, EXP1}};
 
 /**
  * Code that manipulates Reverse Poland Notation
