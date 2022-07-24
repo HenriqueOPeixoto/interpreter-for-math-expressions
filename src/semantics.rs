@@ -1,9 +1,11 @@
+use std::f32::consts::E;
+
 /**
  * Assuming correct syntax, semantics.rs code will calculate the values of the expressions
  * within the input file.
  */
 
-use crate::{token::Token, lex_scanner::{OPEN_PAR, CLOSE_PAR, OPERATOR, DIGIT, SPACE}};
+use crate::{token::Token, lex_scanner::{OPEN_PAR, CLOSE_PAR, OPERATOR, DIGIT, SPACE, EXP1}};
 
 const OP_WAITING: i32 = -1; // waiting result from inner expression
 const OP_NONE: i32 = 0;
@@ -127,8 +129,23 @@ pub fn calculate_expr_rpn(tokens: Vec<Token>) -> Token {
 
                     stack.push(Token{ termo: (operand_1 / operand_2).to_string(), tipo: DIGIT });
                 },
+                "^" => {
+                    let operand_2_token = stack.pop().expect("Operando não encontrado");
+                    let operand_1_token = stack.pop().expect("Operando não encontrado");
+                    
+                    let operand_2 = &operand_2_token.termo.parse::<f32>().expect("Erro ao converter operando");
+                    let operand_1 = &operand_1_token.termo.parse::<f32>().expect("Erro ao converter operando");
+
+                    stack.push(Token{ termo: (operand_1.powf(*operand_2)).to_string(), tipo: DIGIT });
+                },
                 _ => todo!()
             }
+        } else if token.tipo == EXP1 {
+            let operand_1_token = stack.pop().expect("Operando não encontrado");
+                    
+            let operand_1 = &operand_1_token.termo.parse::<f32>().expect("Erro ao converter operando");
+
+            stack.push(Token{ termo: (E.powf(*operand_1)).to_string(), tipo: DIGIT });
         }
     }
 
