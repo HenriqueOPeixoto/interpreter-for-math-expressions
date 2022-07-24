@@ -64,14 +64,16 @@ fn main() {
 
     let rpn_vec = rpn::shunting_yard(tokens.clone());
 
-    for token in rpn_vec {
+    for token in &rpn_vec {
         print!("{}, ", token.termo);
         if token.tipo == NEWLINE {
             println!();
         }
     }
 
-    println!()
+    println!();
 
+    println!("{:?}", semantics::calculate_expr_rpn(rpn_vec.clone()))
+    
 }
 
