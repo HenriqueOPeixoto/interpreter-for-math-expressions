@@ -5,13 +5,13 @@ use std::f32::consts::E;
  * within the input file.
  */
 
-use crate::{token::Token, lex_scanner::{OPERATOR, DIGIT, EXP1}};
+use crate::{token::Token, lex_scanner::{OPERATOR, DIGIT, EXP1, NEWLINE, EOF}};
 
 /**
  * Assuming values are organized in RPN, returns the expression value
  */
-pub fn calculate_expr_rpn(tokens: Vec<Token>) -> Token {
-    let mut expr_result = 0;
+pub fn calculate_expr_rpn(tokens: Vec<Token>) -> Vec<Token> {
+    let mut result_tokens: Vec<Token> = vec![];
 
     let mut stack: Vec<Token> = vec![];
 
@@ -75,8 +75,11 @@ pub fn calculate_expr_rpn(tokens: Vec<Token>) -> Token {
             let operand_1 = &operand_1_token.termo.parse::<f32>().expect("Erro ao converter operando");
 
             stack.push(Token{ termo: (E.powf(*operand_1)).to_string(), tipo: DIGIT });
+        } else if token.tipo == NEWLINE || token.tipo == EOF {
+            result_tokens.push(stack.pop().unwrap())
         }
     }
 
-    stack.pop().unwrap()
+    result_tokens
+
 }
