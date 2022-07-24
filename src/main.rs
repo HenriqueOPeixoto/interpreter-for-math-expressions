@@ -13,6 +13,7 @@ use lex_scanner::EOF;
 use lex_scanner::LexScanner;
 use token::Token;
 
+use crate::lex_scanner::NEWLINE;
 use crate::utils::rpn;
 
 fn main() {
@@ -61,7 +62,16 @@ fn main() {
 
     //println!("Resultado: {}", semantics::calculate_expr(tokens.clone(), 0));
 
-    println!("RPN: {:?}", rpn::shunting_yard(tokens.clone()));
+    let rpn_vec = rpn::shunting_yard(tokens.clone());
+
+    for token in rpn_vec {
+        print!("{}, ", token.termo);
+        if token.tipo == NEWLINE {
+            println!();
+        }
+    }
+
+    println!()
 
 }
 
