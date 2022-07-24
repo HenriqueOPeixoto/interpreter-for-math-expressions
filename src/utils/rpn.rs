@@ -1,4 +1,4 @@
-use crate::{token::Token, lex_scanner::{DIGIT, OPERATOR, OPEN_PAR, CLOSE_PAR, EOF, NEWLINE}};
+use crate::{token::Token, lex_scanner::{DIGIT, OPERATOR, OPEN_PAR, CLOSE_PAR, EOF, NEWLINE, EXP1}};
 
 /**
  * Code that manipulates Reverse Poland Notation
@@ -6,7 +6,8 @@ use crate::{token::Token, lex_scanner::{DIGIT, OPERATOR, OPEN_PAR, CLOSE_PAR, EO
 
 const MIN_PRIORITY: i32 = 0; // Used in + and -
 const MED_PRIORITY: i32 = 1; // Used in * and /
-const MAX_PRIORITY: i32 = 2; // Used in ^ and exp[]
+const MAX_PRIORITY: i32 = 2; // Used in ^
+const UNARY_PRIORITY: i32 = 3; // Used in exp[]
 
 pub fn shunting_yard(tokens: Vec<Token>) -> Vec<Token> {
 
@@ -48,7 +49,19 @@ pub fn shunting_yard(tokens: Vec<Token>) -> Vec<Token> {
                     }
                     stack.push(token.clone());
                 },
-                "^" | "exp" => {
+                "^" => {
+                    let precedence = match &stack.last() {
+                        Some(x) => get_precedence(&x.termo),
+                        None => -1
+                    };
+
+                    if precedence > MAX_PRIORITY {
+                        while let Some(x) = stack.last() {
+                            if get_precedence(&x.termo) <= MAX_PRIORITY { break; }
+                            
+                            out.push(stack.pop().unwrap());
+                        }
+                    }
                     stack.push(token.clone());
                 }
                 _ => todo!()
@@ -68,6 +81,8 @@ pub fn shunting_yard(tokens: Vec<Token>) -> Vec<Token> {
                 out.push(stack.pop().unwrap());
             }
             out.push(token.clone())
+        } else if token.tipo == EXP1 {
+            stack.push(token.clone());
         }
 
     }
@@ -85,8 +100,10 @@ fn get_precedence(op: &str) -> i32 {
         return MIN_PRIORITY;
     } else if op == "*" || op == "/" {
         return MED_PRIORITY;
-    } else if op == "^" || op == "exp" {
+    } else if op == "^" {
         return MAX_PRIORITY;
+    } else if op == "exp" {
+        return UNARY_PRIORITY;
     } else {
         return -1;
     }
