@@ -4,9 +4,9 @@ pub struct Token {
     pub termo: String
 }
 
-impl Token {
+/* impl Token {
     pub fn to_string(&self) {
         println!("Tipo: {}, Termo: {}", self.tipo, self.termo);
     }
 }
-
+ */
