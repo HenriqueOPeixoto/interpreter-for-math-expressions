@@ -1,4 +1,4 @@
-use crate::{token::Token, lex_scanner::{DIGIT, OPERATOR}};
+use crate::{token::Token, lex_scanner::{DIGIT, OPERATOR, OPEN_PAR, CLOSE_PAR}};
 
 /**
  * Code that manipulates Reverse Poland Notation
@@ -52,6 +52,16 @@ pub fn shunting_yard(tokens: Vec<Token>) -> Vec<Token> {
                     stack.push(token.clone());
                 }
                 _ => todo!()
+            }
+        } else if token.tipo == OPEN_PAR {
+            stack.push(token.clone());
+        } else if token.tipo == CLOSE_PAR {
+            while let Some(x) = stack.last() {
+                if x.tipo != OPEN_PAR { out.push(stack.pop().unwrap()); }
+                else { 
+                    stack.pop(); // discard (
+                    break; 
+                }
             }
         }
 
