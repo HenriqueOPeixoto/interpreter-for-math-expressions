@@ -1,6 +1,6 @@
-# Compiler for Math Expressions
+# Interpreter for Math Expressions
 
-A compiler I developed for Compilers class in UFMT, considering the following language:
+An interpreter I developed for Compilers class in UFMT, considering the following language:
 
     <E> -> <E> + <T> | <E> - <T> | <T>
 
@@ -25,7 +25,7 @@ If you have cargo installed, you can use:
 
     cargo r --release input.txt
 
-The compiler will perform a syntax parsing and then attempt to convert infix notation from input file to postfix. Once the conversion is done it will evaluate the expressions and return the answer for each one.
+The interpreter will perform a syntax parsing and then attempt to convert infix notation from input file to postfix. Once the conversion is done it will evaluate the expressions and return the answer for each one.
 
 ## Input file example:
 
